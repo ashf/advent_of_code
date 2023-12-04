@@ -20,8 +20,8 @@ while (cardNum < lines.Count)
 		var line = lines[cardNum];
 
 		var firstSplit = line.Split('|');
-		var winners = firstSplit[0].Split(':')[1].Trim().Split(' ').Where(x => x != "").Select(x => int.Parse(x));
-		var guesses = firstSplit[1].Trim().Split(' ').Where(x => x != "").Select(x => int.Parse(x));
+		var winners = firstSplit[0].Split(':')[1].Trim().Split(' ').Where(x => x != "");
+		var guesses = firstSplit[1].Trim().Split(' ').Where(x => x != "");
 
 		cardResult[cardNum] = winners.Intersect(guesses).Count();
 	}
