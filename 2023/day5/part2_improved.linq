@@ -46,9 +46,8 @@ var minLocation = long.MaxValue;
 var lockObj = new object();
 
 var seedRangeMatches = Regex.Matches(seedLine, @"(\d+) (\d+)");
-foreach (Match seedRangeMatch in seedRangeMatches)
+Parallel.ForEach(seedRangeMatches, seedRangeMatch =>
 {
-	long localMinLocation = long.MaxValue;
 	var start = long.Parse(seedRangeMatch.Groups[1].Value);
 	var length = long.Parse(seedRangeMatch.Groups[2].Value);
 
@@ -62,9 +61,12 @@ foreach (Match seedRangeMatch in seedRangeMatches)
 	ranges = GetMappedRanges(maps[MapInput.Light2Temperature], ranges);
 	ranges = GetMappedRanges(maps[MapInput.Temperature2Humidity], ranges);
 	ranges = GetMappedRanges(maps[MapInput.Humidity2Location], ranges);
-	
-	minLocation = Math.Min(minLocation, ranges.Min(x => x.Start));
-}
+
+	lock (lockObj)
+	{
+		minLocation = Math.Min(minLocation, ranges.Min(x => x.Start));
+	}
+});
 
 minLocation.Dump();
 
