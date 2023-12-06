@@ -16,21 +16,34 @@ for (int i = 0; i < times.Count; i++)
 	});
 }
 
-var total = 1;
+var totalNaive = 1;
+var totalOptimal = 1;
 foreach (var race in races)
 {
-	total *= race.OptimalOptions.Count();
+	totalNaive *= race.OptimalOptions_Naive;
+	totalOptimal *= race.OptimalOptionsCount_Optimal();
 }
-total.Dump();
+totalNaive.Dump();
+totalOptimal.Dump();
 
 class Race
 {
 	public int Time;
 	public int Record;
 	
-	public IEnumerable<int> OptimalOptions =>
+	public int OptimalOptions_Naive =>
 		Enumerable
 			.Range(0, Time + 1)
 			.Select(x => x * (Time - x))
-			.Where(x => x > Record);
+			.Where(x => x > Record)
+			.Count();
+
+	public int OptimalOptionsCount_Optimal()
+	{
+		var upperBoundary = Math.Floor((Time + Math.Sqrt(Math.Pow(Time, 2) - 4 * Record)) / 2);
+
+		var lowerBoundary = Math.Ceiling((Time - Math.Sqrt(Math.Pow(Time, 2) - 4 * Record)) / 2);
+
+		return (int)(upperBoundary - lowerBoundary + 1);
+	}
 }

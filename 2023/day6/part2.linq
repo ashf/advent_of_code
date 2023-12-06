@@ -8,14 +8,15 @@ var race = new Race
 	Record = long.Parse(lines[1].Replace(" ", "").Split(':')[1])
 };
 
-race.OptimalOptions().Count().Dump();
+race.OptimalOptions_Naive().Dump();
+race.OptimalOptionsCount_Optimal().Dump();
 
 class Race
 {
 	public long Time;
 	public long Record;
 	
-	public IEnumerable<long> OptimalOptions()
+	public int OptimalOptions_Naive()
 	{
 		List<long> options = new();
 		for (long i = 0; i <= Time; i++)
@@ -26,6 +27,15 @@ class Race
 				options.Add(traveled);
 			}
 		}
-		return options;
+		return options.Count();
+	}
+	
+	public int OptimalOptionsCount_Optimal()
+	{
+		var upperBoundary = Math.Floor((Time + Math.Sqrt(Math.Pow(Time, 2) - 4 * Record)) / 2);
+
+		var lowerBoundary = Math.Ceiling((Time - Math.Sqrt(Math.Pow(Time, 2) - 4 * Record)) / 2);
+
+		return (int)(upperBoundary - lowerBoundary + 1);
 	}
 }
