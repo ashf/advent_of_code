@@ -1,13 +1,11 @@
 <Query Kind="Statements" />
 
-using var file = File.Open(@"c:\dev\advent_of_code\2023\day2\input.txt", FileMode.Open);
-using var streamReader = new StreamReader(file);
+var lines = File.ReadLines("c:/dev/advent_of_code/2023/day2/input.txt");
 
 var sum = 0;
 
-while (!streamReader.EndOfStream)
+foreach (var line in lines)
 {
-    var line = streamReader.ReadLine();
     int id = int.Parse(line.Split(' ')[1].Split(':')[0]);
     
     var game = line.Split(':')[1];

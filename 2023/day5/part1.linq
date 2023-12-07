@@ -1,6 +1,6 @@
 <Query Kind="Statements" />
 
-var lines = File.ReadLines("c:/dev/advent_of_code/2023/day5/input.txt").ToList();
+var lines = File.ReadLines("c:/dev/advent_of_code/2023/day5/input.txt");
 
 List<long> seeds = new();
 MapInput? mapInput = null;

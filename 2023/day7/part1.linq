@@ -1,16 +1,12 @@
 <Query Kind="Statements" />
 
-var lines = File.ReadLines("c:/dev/advent_of_code/2023/day7/input.txt").ToList();
+var lines = File.ReadLines("c:/dev/advent_of_code/2023/day7/input.txt");
 
-List<Hand> hands = new();
-foreach (var line in lines)
-{
-    hands.Add(new Hand(
+var sortedHands = lines
+    .Select(line => new Hand(
         cards: line.Split(' ')[0],
-        bid: int.Parse(line.Split(' ')[1])));
-}
-
-var sortedHands = hands.OrderDescending();
+        bid: int.Parse(line.Split(' ')[1])))
+    .OrderDescending();
 
 var totalWinnings = 0;
 int rank = 1;

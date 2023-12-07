@@ -3,7 +3,7 @@
   <Namespace>System.Collections.Concurrent</Namespace>
 </Query>
 
-var lines = File.ReadLines("c:/dev/advent_of_code/2023/day5/input.txt").ToList();
+var lines = File.ReadLines("c:/dev/advent_of_code/2023/day5/input.txt");
 
 MapInput? mapInput = null;
 Dictionary<MapInput, List<Map>> maps = new();
